@@ -7,9 +7,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.Historico;
+import view.Calculadora;
 
 public class Conexao {
-    
+    Calculadora calc = new Calculadora();
     private Connection con;
     PreparedStatement stmt;
     Historico historico = new Historico();
@@ -43,7 +44,7 @@ public class Conexao {
             
         }catch(Exception e){
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao salvar resultado no banco de dados!");
+            JOptionPane.showMessageDialog(calc, "Erro ao salvar resultado no banco de dados!");
         }
         desconectar();
        
@@ -55,7 +56,7 @@ public class Conexao {
             
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Erro ao fechar conexão.");
+            JOptionPane.showMessageDialog(calc, "Erro ao fechar conexão!");
         }
     
     
