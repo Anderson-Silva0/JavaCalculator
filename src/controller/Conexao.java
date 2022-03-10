@@ -52,7 +52,7 @@ public class Conexao {
         desconectar();
     }
 
-    public List<Historico> executaSql() {
+    public List<Historico> read() {
         String SQL = "SELECT * FROM historico";
         List<Historico> lista_historico = new ArrayList();
 
@@ -70,7 +70,7 @@ public class Conexao {
 
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao buscar usuário.");
+            JOptionPane.showMessageDialog(null, "Erro ao buscar histórico.");
         }
         return lista_historico;
     }

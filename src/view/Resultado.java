@@ -36,10 +36,10 @@ public class Resultado extends javax.swing.JDialog {
             Conexao con = new Conexao();
             con.conectar();
 
-            for (Historico u : con.executaSql()) {
+            for (Historico h : con.read()) {
 
                 modelo.addRow(new Object[]{
-                    u.getExpressao()
+                    h.getExpressao()
                 });
             }
             con.desconectar();
@@ -47,7 +47,6 @@ public class Resultado extends javax.swing.JDialog {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @SuppressWarnings("unchecked")
