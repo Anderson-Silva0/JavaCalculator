@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import controller.Conexao;
@@ -12,61 +7,47 @@ import javax.swing.table.DefaultTableModel;
 import model.Historico;
 import model.ModeloTabela;
 
-/**
- *
- * @author anrde
- */
 public class Resultado extends javax.swing.JDialog {
-Conexao con = new Conexao();
-    
+
+    Conexao con = new Conexao();
+
     public Resultado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
         initComponents();
-        
-        
         setLocationRelativeTo(null);
         preencherTabela();
-        
-        
     }
-    
-    public void preencherTabela(){
-        ArrayList dados = new ArrayList();
-        String [] colunas = new String []{"id", "Resultado"};
+
+    public void preencherTabela() {
+
         con.conectar();
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        
+
         modelo.setNumRows(0);
-        
+
         jTable1.setModel(modelo);
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(340);
-       
-        
+
         jTable1.getTableHeader().setReorderingAllowed(false);
         jTable1.setAutoResizeMode(jTable1.AUTO_RESIZE_OFF);
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        try{
-        Conexao con = new Conexao();
-        con.conectar();
-       
-      
-        dados.add(con.executaSql());
-        con.desconectar();
-        }catch(Exception e){
+
+        try {
+            Conexao con = new Conexao();
+            con.conectar();
+
+            for (Historico u : con.executaSql()) {
+
+                modelo.addRow(new Object[]{
+                    u.getExpressao()
+                });
+            }
+            con.desconectar();
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        for(Historico u: con.executaSql()){
-           
-               modelo.addRow(new Object[]{
-                u.getExpressao()
-            });
-        } 
-        
-        con.desconectar();
-    
-    
+
     }
 
     @SuppressWarnings("unchecked")
@@ -106,9 +87,6 @@ Conexao con = new Conexao();
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
