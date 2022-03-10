@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.sql.ResultSet;
 import controller.Conexao;
 import java.awt.event.FocusListener;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import javax.swing.Icon;
 import javax.swing.JFrame;
 import model.Historico;
+import view.Resultado;
 
 /**
  *
@@ -24,6 +26,7 @@ public class Calculadora extends javax.swing.JFrame {
 
     private java.awt.event.ActionEvent evt1;
 
+    int apaga = 1;
     float[] vt = new float[51];
     float[] vtt = new float[51];
     float result = 1f;
@@ -32,14 +35,20 @@ public class Calculadora extends javax.swing.JFrame {
     Historico historico = new Historico();
     float calculo = 0;
     int tamanho = 0;
-
+    String s;
+    float[] armazena = new float[51];
+    
+    
     public Calculadora() {
+        
         setResizable(false);
         initComponents();
         this.setLocationRelativeTo(null);
         for (int c = 0; c < vtt.length; c++) {
             vtt[c] = 1f;
         }
+        
+       
     }
 
     @SuppressWarnings("unchecked")
@@ -47,7 +56,6 @@ public class Calculadora extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jMenuItem1 = new javax.swing.JMenuItem();
         btn1 = new javax.swing.JButton();
         btn7 = new javax.swing.JButton();
         btn4 = new javax.swing.JButton();
@@ -57,6 +65,8 @@ public class Calculadora extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         TxtResultado = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        txtre = new javax.swing.JTextField();
+        btnHist = new javax.swing.JButton();
         btn6 = new javax.swing.JButton();
         btn2 = new javax.swing.JButton();
         btn8 = new javax.swing.JButton();
@@ -81,11 +91,8 @@ public class Calculadora extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jMenuItem1.setText("jMenuItem1");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Calculadora Anderson");
-        setAlwaysOnTop(true);
+        setTitle("A͎n͎d͎e͎r͎s͎o͎n͎");
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -167,25 +174,58 @@ public class Calculadora extends javax.swing.JFrame {
         TxtResultado.setBackground(new java.awt.Color(204, 204, 204));
         TxtResultado.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         TxtResultado.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        TxtResultado.setFocusable(false);
+        TxtResultado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtResultadoActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("    Calculadora Anderson");
+        jLabel1.setText("A͎n͎d͎e͎r͎s͎o͎n͎");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+
+        txtre.setEditable(false);
+        txtre.setBackground(new java.awt.Color(204, 204, 204));
+        txtre.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        txtre.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtre.setBorder(null);
+
+        btnHist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/2222.png"))); // NOI18N
+        btnHist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(TxtResultado)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtre, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(btnHist, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHist))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TxtResultado))
         );
 
         btn6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -403,7 +443,7 @@ public class Calculadora extends javax.swing.JFrame {
 
     private void btnApagarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarCActionPerformed
         TxtResultado.setText("");
-
+        txtre.setText("");
         for (int d = 0; d < vtt.length; d++) {
             vtt[d] = 1f;
         }
@@ -413,49 +453,98 @@ public class Calculadora extends javax.swing.JFrame {
         }
         result = 0f;
         tamanho = 0;
+        s = "";
     }//GEN-LAST:event_btnApagarCActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "1");
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "2");
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "4");
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "5");
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "6");
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "7");
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "8");
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "9");
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnAdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicaoActionPerformed
-
-        if (tamanho < vt.length) {
+         if (tamanho < vt.length) {
             vt[tamanho] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
-            TxtResultado.setText("");
-            tamanho++;
+            historico.setPriNum(TxtResultado.getText());
         } else {
             JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
         }
+        
+        if(tamanho > 0){
+            if(apaga != 0){
+                if(sinal.equals("+")){
+                calculo = vt[0] + vt[1] + vt[2] + vt[3] + vt[4] + vt[5] + vt[6] + vt[7] + vt[8] + vt[9] + vt[10] + vt[11] + vt[12] + vt[13] + vt[14] + vt[15] + vt[16] + vt[17] + vt[18] + vt[19] + vt[20] + vt[21] + vt[22] + vt[23] + vt[24] + vt[25] + vt[26] + vt[27] + vt[28] + vt[29] + vt[30] + vt[31] + vt[32] + vt[33] + vt[34] + vt[35] + vt[36] + vt[37] + vt[38] + vt[39] + vt[40] + vt[41] + vt[42] + vt[43] + vt[44] + vt[45] + vt[46] + vt[47] + vt[48] + vt[49] + vt[50];
+                
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+        historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+                }
+                }
+            }
+        
+        txtre.setText(historico.getPriNum() + " + ");
+
+        s = txtre.getText();
+
+        tamanho++;
+        apaga = 0;
         sinal = "+";
     }//GEN-LAST:event_btnAdicaoActionPerformed
 
@@ -464,27 +553,47 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVirgulaActionPerformed
 
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
+        
         try {
+
             if (sinal.equals("+") || sinal.equals("-")) {
                 vt[50] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
             }
             vtt[50] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
 
             if (sinal.equals("+")) {
-                calculo = vt[0] + vt[1] + vt[2] + vt[3] + vt[4] + vt[5] + vt[6] + vt[7] + vt[8] + vt[9] + vt[10] + vt[11] + vt[12] + vt[13] + vt[14] + vt[15] + vt[16] + vt[17] + vt[18] + vt[19] + vt[20] + vt[21] + vt[22] + vt[23] + vt[24] + vt[25] + vt[26] + vt[27] + vt[28] + vt[29] + vt[30] + vt[31] + vt[32] + vt[33] + vt[34] + vt[35] + vt[36] + vt[37] + vt[38] + vt[39] + vt[40] + vt[41] + vt[42] + vt[43] + vt[44] + vt[45] + vt[46] + vt[47] + vt[48] + vt[49] + vt[50];
 
+                historico.setSegunNum(TxtResultado.getText());
+                
+                calculo = vt[0] + vt[1] + vt[2] + vt[3] + vt[4] + vt[5] + vt[6] + vt[7] + vt[8] + vt[9] + vt[10] + vt[11] + vt[12] + vt[13] + vt[14] + vt[15] + vt[16] + vt[17] + vt[18] + vt[19] + vt[20] + vt[21] + vt[22] + vt[23] + vt[24] + vt[25] + vt[26] + vt[27] + vt[28] + vt[29] + vt[30] + vt[31] + vt[32] + vt[33] + vt[34] + vt[35] + vt[36] + vt[37] + vt[38] + vt[39] + vt[40] + vt[41] + vt[42] + vt[43] + vt[44] + vt[45] + vt[46] + vt[47] + vt[48] + vt[49] + vt[50];
+                
                 TxtResultado.setText(String.valueOf(df.format(calculo)));
 
+                historico.setResultado(TxtResultado.getText());
+                
+                s += historico.getSegunNum() + " = " + historico.getResultado();
+                txtre.setText(s);
+                
+                
                 for (int d = 0; d < vtt.length; d++) {
                     vt[d] = 0f;
                 }
+                
             }
 
             if (sinal.equals("-")) {
+                
+                historico.setSegunNum(TxtResultado.getText());
+                
                 calculo = vt[0] - vt[1] - vt[2] - vt[3] - vt[4] - vt[5] - vt[6] - vt[7] - vt[8] - vt[9] - vt[10] - vt[11] - vt[12] - vt[13] - vt[14] - vt[15] - vt[16] - vt[17] - vt[18] - vt[19] - vt[20] - vt[21] - vt[22] - vt[23] - vt[24] - vt[25] - vt[26] - vt[27] - vt[28] - vt[29] - vt[30] - vt[31] - vt[32] - vt[33] - vt[34] - vt[35] - vt[36] - vt[37] - vt[38] - vt[39] - vt[40] - vt[41] - vt[42] - vt[43] - vt[44] - vt[45] - vt[46] - vt[47] - vt[48] - vt[49] - vt[50];
 
                 TxtResultado.setText(String.valueOf(df.format(calculo)));
 
+                historico.setResultado(TxtResultado.getText());
+                
+                s += historico.getSegunNum() + " = " + historico.getResultado();
+                txtre.setText(s);
+                
                 for (int d = 0; d < vtt.length; d++) {
                     vt[d] = 0f;
                 }
@@ -492,10 +601,17 @@ public class Calculadora extends javax.swing.JFrame {
 
             if (sinal.equals("X")) {
 
+                historico.setSegunNum(TxtResultado.getText());
+                
                 calculo = vtt[0] * vtt[1] * vtt[2] * vtt[3] * vtt[4] * vtt[5] * vtt[6] * vtt[7] * vtt[8] * vtt[9] * vtt[10] * vtt[11] * vtt[12] * vtt[13] * vtt[14] * vtt[15] * vtt[16] * vtt[17] * vtt[18] * vtt[19] * vtt[20] * vtt[21] * vtt[22] * vtt[23] * vtt[24] * vtt[25] * vtt[26] * vtt[27] * vtt[28] * vtt[29] * vtt[30] * vtt[31] * vtt[32] * vtt[33] * vtt[34] * vtt[35] * vtt[36] * vtt[37] * vtt[38] * vtt[39] * vtt[40] * vtt[41] * vtt[42] * vtt[43] * vtt[44] * vtt[45] * vtt[46] * vtt[47] * vtt[48] * vtt[49] * vtt[50];
 
                 TxtResultado.setText(String.valueOf(df.format(calculo)));
 
+                 historico.setResultado(TxtResultado.getText());
+                
+                s += historico.getSegunNum() + " = " + historico.getResultado();
+                txtre.setText(s);
+                
                 for (int d = 0; d < vtt.length; d++) {
                     vtt[d] = 1f;
                 }
@@ -503,17 +619,23 @@ public class Calculadora extends javax.swing.JFrame {
 
             if (sinal.equals("/")) {
 
+                historico.setSegunNum(TxtResultado.getText());
+                
                 calculo = vtt[0] / vtt[1] / vtt[2] / vtt[3] / vtt[4] / vtt[5] / vtt[6] / vtt[7] / vtt[8] / vtt[9] / vtt[10] / vtt[11] / vtt[12] / vtt[13] / vtt[14] / vtt[15] / vtt[16] / vtt[17] / vtt[18] / vtt[19] / vtt[20] / vtt[21] / vtt[22] / vtt[23] / vtt[24] / vtt[25] / vtt[26] / vtt[27] / vtt[28] / vtt[29] / vtt[30] / vtt[31] / vtt[32] / vtt[33] / vtt[34] / vtt[35] / vtt[36] / vtt[37] / vtt[38] / vtt[39] / vtt[40] / vtt[41] / vtt[42] / vtt[43] / vtt[44] / vtt[45] / vtt[46] / vtt[47] / vtt[48] / vtt[49] / vtt[50];
 
                 TxtResultado.setText(String.valueOf(df.format(calculo)));
-
+                historico.setResultado(TxtResultado.getText());
+                
+                s += historico.getSegunNum() + " = " + historico.getResultado();
+                txtre.setText(s);
+                
                 for (int d = 0; d < vtt.length; d++) {
                     vtt[d] = 1f;
                 }
             }
 
             tamanho = 0;
-
+            s = "";
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Insira um número no campo!");
@@ -522,8 +644,7 @@ public class Calculadora extends javax.swing.JFrame {
         try {
             Historico historico = new Historico();
             Conexao con = new Conexao();
-
-            historico.setResultado(String.valueOf(TxtResultado.getText()));
+            historico.setExpressao(txtre.getText());
             con.inserir(historico);
 
         } catch (Exception e) {
@@ -537,45 +658,109 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyPressed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "3");
+
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
+        if (apaga == 0) {
+            TxtResultado.setText("");
+        }
+        apaga++;
         TxtResultado.setText(TxtResultado.getText() + "0");
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnSubtracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtracaoActionPerformed
         if (tamanho < vt.length) {
             vt[tamanho] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
-            TxtResultado.setText("");
-            tamanho++;
+            historico.setPriNum(TxtResultado.getText());    
         } else {
             JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
         }
+        if(tamanho > 0){
+            if(apaga != 0){
+                
+        calculo = vt[0] - vt[1] - vt[2] - vt[3] - vt[4] - vt[5] - vt[6] - vt[7] - vt[8] - vt[9] - vt[10] - vt[11] - vt[12] - vt[13] - vt[14] - vt[15] - vt[16] - vt[17] - vt[18] - vt[19] - vt[20] - vt[21] - vt[22] - vt[23] - vt[24] - vt[25] - vt[26] - vt[27] - vt[28] - vt[29] - vt[30] - vt[31] - vt[32] - vt[33] - vt[34] - vt[35] - vt[36] - vt[37] - vt[38] - vt[39] - vt[40] - vt[41] - vt[42] - vt[43] - vt[44] - vt[45] - vt[46] - vt[47] - vt[48] - vt[49] - vt[50];
+        TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+        historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+                
+                }
+            }
+        
+        txtre.setText(historico.getPriNum() + " - ");
+
+        s = txtre.getText();
+
+        tamanho++;
+        apaga = 0;
         sinal = "-";
     }//GEN-LAST:event_btnSubtracaoActionPerformed
 
     private void btnDivisaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisaoActionPerformed
         if (tamanho < vtt.length) {
             vtt[tamanho] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
-            TxtResultado.setText("");
-            tamanho++;
+            historico.setPriNum(TxtResultado.getText());
         } else {
             JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
         }
+        if(tamanho > 0){
+            if(apaga != 0){
+        calculo = vtt[0] / vtt[1] / vtt[2] / vtt[3] / vtt[4] / vtt[5] / vtt[6] / vtt[7] / vtt[8] / vtt[9] / vtt[10] / vtt[11] / vtt[12] / vtt[13] / vtt[14] / vtt[15] / vtt[16] / vtt[17] / vtt[18] / vtt[19] / vtt[20] / vtt[21] / vtt[22] / vtt[23] / vtt[24] / vtt[25] / vtt[26] / vtt[27] / vtt[28] / vtt[29] / vtt[30] / vtt[31] / vtt[32] / vtt[33] / vtt[34] / vtt[35] / vtt[36] / vtt[37] / vtt[38] / vtt[39] / vtt[40] / vtt[41] / vtt[42] / vtt[43] / vtt[44] / vtt[45] / vtt[46] / vtt[47] / vtt[48] / vtt[49] / vtt[50];
+        
+            TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+            historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+                }
+                }
+        
+        txtre.setText(historico.getPriNum() + " ÷ ");
+
+        s = txtre.getText();
+
+        tamanho++;
+        apaga = 0;
         sinal = "/";
     }//GEN-LAST:event_btnDivisaoActionPerformed
 
     private void btnMultiplicacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicacaoActionPerformed
         if (tamanho < vtt.length) {
             vtt[tamanho] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
-            TxtResultado.setText("");
-            tamanho++;
+            historico.setPriNum(TxtResultado.getText());
         } else {
             JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
         }
+        if(tamanho > 0){
+            if(apaga != 0){
+        calculo = vtt[0] * vtt[1] * vtt[2] * vtt[3] * vtt[4] * vtt[5] * vtt[6] * vtt[7] * vtt[8] * vtt[9] * vtt[10] * vtt[11] * vtt[12] * vtt[13] * vtt[14] * vtt[15] * vtt[16] * vtt[17] * vtt[18] * vtt[19] * vtt[20] * vtt[21] * vtt[22] * vtt[23] * vtt[24] * vtt[25] * vtt[26] * vtt[27] * vtt[28] * vtt[29] * vtt[30] * vtt[31] * vtt[32] * vtt[33] * vtt[34] * vtt[35] * vtt[36] * vtt[37] * vtt[38] * vtt[39] * vtt[40] * vtt[41] * vtt[42] * vtt[43] * vtt[44] * vtt[45] * vtt[46] * vtt[47] * vtt[48] * vtt[49] * vtt[50];
+        
+            TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+            historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+                }
+                }
+        
+        txtre.setText(historico.getPriNum() + " X ");
+
+        s = txtre.getText();
+
+        tamanho++;
+        apaga = 0;
         sinal = "X";
     }//GEN-LAST:event_btnMultiplicacaoActionPerformed
+
+    private void TxtResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtResultadoActionPerformed
+        
+    }//GEN-LAST:event_TxtResultadoActionPerformed
+
+    private void btnHistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistActionPerformed
+       Conexao con = new Conexao();
+        Resultado resultado = new Resultado(new javax.swing.JFrame(), true);
+        resultado.setVisible(true);
+        
+        
+    }//GEN-LAST:event_btnHistActionPerformed
 
     public static void main(String args[]) {
 
@@ -619,13 +804,14 @@ public class Calculadora extends javax.swing.JFrame {
     private javax.swing.JButton btnApagarC;
     private javax.swing.JButton btnApagarCE;
     private javax.swing.JButton btnDivisao;
+    private javax.swing.JButton btnHist;
     private javax.swing.JButton btnIgual;
     private javax.swing.JButton btnMultiplicacao;
     private javax.swing.JButton btnSubtracao;
     private javax.swing.JButton btnVirgula;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JTextField txtre;
     // End of variables declaration//GEN-END:variables
 }

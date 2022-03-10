@@ -5,20 +5,11 @@ package model;
 
 public class Historico {
     
-    String numero;
+   int id;
     String priNum;      //Aqui tem variáveis que não estou usando, mas talvez ainda use.
     String segunNum;
     String resultado;
-    String somaTotal;
-
-    public String getSomaTotal() {
-        return somaTotal;
-    }
-
-    public void setSomaTotal(String somaTotal) {
-        this.somaTotal = somaTotal;
-    }
-    
+    String expressao;
     
     public String getResultado() {
         return resultado;
@@ -26,14 +17,6 @@ public class Historico {
 
     public void setResultado(String resultado) {
         this.resultado = resultado;
-    }
-    
-    public String getNumero(){
-        return numero;
-    }
-    
-    public void setNumero(String numero){
-        this.numero = numero;
     }
 
     public String getPriNum() {
@@ -52,4 +35,22 @@ public class Historico {
     public void setSegunNum(String segunNum) {
         this.segunNum = segunNum;
     }
+
+    public String getExpressao() {
+        return expressao;
+    }
+
+    public void setExpressao(String expressao) {
+        this.expressao = expressao;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
+    
 }
