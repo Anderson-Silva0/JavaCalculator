@@ -12,31 +12,26 @@ import javax.swing.JOptionPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import javax.swing.Icon;
 import javax.swing.JFrame;
 import model.Historico;
 import view.Resultado;
 
-/**
- *
- * @author anrde
- */
 public class Calculadora extends javax.swing.JFrame {
-
-    private java.awt.event.ActionEvent evt1;
 
     int apaga = 1;
     float[] vt = new float[51];
     float[] vtt = new float[51];
     float result = 1f;
-    String sinal;
+    String sinal = "null";
     DecimalFormat df = new DecimalFormat();
     Historico historico = new Historico();
     float calculo = 0;
     int tamanho = 0;
     String s;
-    float[] armazena = new float[51];
+    float armazena;
 
     public Calculadora() {
         setResizable(false);
@@ -59,10 +54,10 @@ public class Calculadora extends javax.swing.JFrame {
         btn0 = new javax.swing.JButton();
         btn9 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
-        TxtResultado = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         txtre = new javax.swing.JTextField();
         btnHist = new javax.swing.JButton();
+        TxtResultado = new javax.swing.JFormattedTextField();
         btn6 = new javax.swing.JButton();
         btn2 = new javax.swing.JButton();
         btn8 = new javax.swing.JButton();
@@ -75,6 +70,7 @@ public class Calculadora extends javax.swing.JFrame {
         btnVirgula = new javax.swing.JButton();
         btnApagarCE = new javax.swing.JButton();
         btnApagarC = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -166,17 +162,6 @@ public class Calculadora extends javax.swing.JFrame {
         jPanel9.setForeground(new java.awt.Color(204, 204, 204));
         jPanel9.setAutoscrolls(true);
 
-        TxtResultado.setEditable(false);
-        TxtResultado.setBackground(new java.awt.Color(204, 204, 204));
-        TxtResultado.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        TxtResultado.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        TxtResultado.setFocusable(false);
-        TxtResultado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtResultadoActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("A͎n͎d͎e͎r͎s͎o͎n͎");
@@ -195,11 +180,17 @@ public class Calculadora extends javax.swing.JFrame {
             }
         });
 
+        TxtResultado.setEditable(false);
+        TxtResultado.setBackground(new java.awt.Color(204, 204, 204));
+        TxtResultado.setBorder(null);
+        TxtResultado.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+        TxtResultado.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        TxtResultado.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TxtResultado)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -211,6 +202,7 @@ public class Calculadora extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(TxtResultado, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,17 +348,25 @@ public class Calculadora extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jButton1.setText(".");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btn7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -426,7 +426,8 @@ public class Calculadora extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnIgual, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVirgula, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnVirgula, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -450,6 +451,7 @@ public class Calculadora extends javax.swing.JFrame {
         result = 0f;
         tamanho = 0;
         s = "";
+        sinal = "null";
     }//GEN-LAST:event_btnApagarCActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
@@ -517,18 +519,87 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnAdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicaoActionPerformed
-        if (tamanho < vt.length) {
-            vt[tamanho] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
-            historico.setPriNum(TxtResultado.getText());
-        } else {
-            JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+        if (sinal.equals("+") || sinal.equals("-") || sinal.equals("null")) {
+            if (tamanho < vt.length) {
+                
+                vt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                historico.setPriNum(TxtResultado.getText());
+            } else {
+                JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+            }
         }
+        //Adição com divisão._______________________________________________________________________
+        if (tamanho > 0) {
+            if (sinal.equals("/")) {
+
+                if (tamanho < vtt.length) {
+                    vtt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                    historico.setPriNum(TxtResultado.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+                }
+                calculo = vtt[0] / vtt[1] / vtt[2] / vtt[3] / vtt[4] / vtt[5] / vtt[6] / vtt[7] / vtt[8] / vtt[9] / vtt[10] / vtt[11] / vtt[12] / vtt[13] / vtt[14] / vtt[15] / vtt[16] / vtt[17] / vtt[18] / vtt[19] / vtt[20] / vtt[21] / vtt[22] / vtt[23] / vtt[24] / vtt[25] / vtt[26] / vtt[27] / vtt[28] / vtt[29] / vtt[30] / vtt[31] / vtt[32] / vtt[33] / vtt[34] / vtt[35] / vtt[36] / vtt[37] / vtt[38] / vtt[39] / vtt[40] / vtt[41] / vtt[42] / vtt[43] / vtt[44] / vtt[45] / vtt[46] / vtt[47] / vtt[48] / vtt[49] / vtt[50];
+
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vtt[i] = 1f;
+                }
+                vt[0] = armazena;
+            }
+        }
+        //Fim adição com divisão.___________________________________________________________________
+
+        //Adição com multiplicação._________________________________________________________________
+        if (tamanho > 0) {
+            if (sinal.equals("X")) {
+
+                if (tamanho < vtt.length) {
+                    vtt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                    historico.setPriNum(TxtResultado.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+                }
+                calculo = vtt[0] * vtt[1] * vtt[2] * vtt[3] * vtt[4] * vtt[5] * vtt[6] * vtt[7] * vtt[8] * vtt[9] * vtt[10] * vtt[11] * vtt[12] * vtt[13] * vtt[14] * vtt[15] * vtt[16] * vtt[17] * vtt[18] * vtt[19] * vtt[20] * vtt[21] * vtt[22] * vtt[23] * vtt[24] * vtt[25] * vtt[26] * vtt[27] * vtt[28] * vtt[29] * vtt[30] * vtt[31] * vtt[32] * vtt[33] * vtt[34] * vtt[35] * vtt[36] * vtt[37] * vtt[38] * vtt[39] * vtt[40] * vtt[41] * vtt[42] * vtt[43] * vtt[44] * vtt[45] * vtt[46] * vtt[47] * vtt[48] * vtt[49] * vtt[50];
+
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vtt[i] = 1f;
+                }
+                vt[0] = armazena;
+            }
+        }
+        //Fim Adição com multiplicação._____________________________________________________________
+
+        //Adição com subtração._____________________________________________________________________
+        if (tamanho > 0) {
+            if (sinal.equals("-")) {
+                calculo = vt[0] - vt[1] - vt[2] - vt[3] - vt[4] - vt[5] - vt[6] - vt[7] - vt[8] - vt[9] - vt[10] - vt[11] - vt[12] - vt[13] - vt[14] - vt[15] - vt[16] - vt[17] - vt[18] - vt[19] - vt[20] - vt[21] - vt[22] - vt[23] - vt[24] - vt[25] - vt[26] - vt[27] - vt[28] - vt[29] - vt[30] - vt[31] - vt[32] - vt[33] - vt[34] - vt[35] - vt[36] - vt[37] - vt[38] - vt[39] - vt[40] - vt[41] - vt[42] - vt[43] - vt[44] - vt[45] - vt[46] - vt[47] - vt[48] - vt[49] - vt[50];
+
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vt[i] = 0f;
+                }
+                vt[0] = armazena;
+            }
+        }
+        //Fim Adição com subtração._________________________________________________________________
 
         if (tamanho > 0) {
             if (apaga != 0) {
                 if (sinal.equals("+")) {
                     calculo = vt[0] + vt[1] + vt[2] + vt[3] + vt[4] + vt[5] + vt[6] + vt[7] + vt[8] + vt[9] + vt[10] + vt[11] + vt[12] + vt[13] + vt[14] + vt[15] + vt[16] + vt[17] + vt[18] + vt[19] + vt[20] + vt[21] + vt[22] + vt[23] + vt[24] + vt[25] + vt[26] + vt[27] + vt[28] + vt[29] + vt[30] + vt[31] + vt[32] + vt[33] + vt[34] + vt[35] + vt[36] + vt[37] + vt[38] + vt[39] + vt[40] + vt[41] + vt[42] + vt[43] + vt[44] + vt[45] + vt[46] + vt[47] + vt[48] + vt[49] + vt[50];
-
+                    
                     TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
                     historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
                 }
@@ -555,7 +626,10 @@ public class Calculadora extends javax.swing.JFrame {
             if (sinal.equals("+") || sinal.equals("-")) {
                 vt[50] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
             }
-            vtt[50] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
+
+            if (sinal.equals("X") || sinal.equals("/")) {
+                vtt[50] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
+            }
 
             if (sinal.equals("+")) {
 
@@ -573,7 +647,7 @@ public class Calculadora extends javax.swing.JFrame {
                 for (int d = 0; d < vtt.length; d++) {
                     vt[d] = 0f;
                 }
-
+                sinal = "null";
             }
 
             if (sinal.equals("-")) {
@@ -592,6 +666,7 @@ public class Calculadora extends javax.swing.JFrame {
                 for (int d = 0; d < vtt.length; d++) {
                     vt[d] = 0f;
                 }
+                sinal = "null";
             }
 
             if (sinal.equals("X")) {
@@ -610,6 +685,7 @@ public class Calculadora extends javax.swing.JFrame {
                 for (int d = 0; d < vtt.length; d++) {
                     vtt[d] = 1f;
                 }
+                sinal = "null";
             }
 
             if (sinal.equals("/")) {
@@ -627,6 +703,7 @@ public class Calculadora extends javax.swing.JFrame {
                 for (int d = 0; d < vtt.length; d++) {
                     vtt[d] = 1f;
                 }
+                sinal = "null";
             }
             tamanho = 0;
             s = "";
@@ -668,18 +745,92 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnSubtracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubtracaoActionPerformed
-        if (tamanho < vt.length) {
-            vt[tamanho] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
-            historico.setPriNum(TxtResultado.getText());
-        } else {
-            JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+        if (sinal.equals("+") || sinal.equals("-") || sinal.equals("null")) {
+            if (tamanho < vt.length) {
+                vt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                historico.setPriNum(TxtResultado.getText());
+            } else {
+                JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+            }
         }
+
+        //Subtração com divisão.____________________________________________________________________
         if (tamanho > 0) {
-            if (apaga != 0) {
-                calculo = vt[0] - vt[1] - vt[2] - vt[3] - vt[4] - vt[5] - vt[6] - vt[7] - vt[8] - vt[9] - vt[10] - vt[11] - vt[12] - vt[13] - vt[14] - vt[15] - vt[16] - vt[17] - vt[18] - vt[19] - vt[20] - vt[21] - vt[22] - vt[23] - vt[24] - vt[25] - vt[26] - vt[27] - vt[28] - vt[29] - vt[30] - vt[31] - vt[32] - vt[33] - vt[34] - vt[35] - vt[36] - vt[37] - vt[38] - vt[39] - vt[40] - vt[41] - vt[42] - vt[43] - vt[44] - vt[45] - vt[46] - vt[47] - vt[48] - vt[49] - vt[50];
+            if (sinal.equals("/")) {
+
+                if (tamanho < vtt.length) {
+                    vtt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                    historico.setPriNum(TxtResultado.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+                }
+                calculo = vtt[0] / vtt[1] / vtt[2] / vtt[3] / vtt[4] / vtt[5] / vtt[6] / vtt[7] / vtt[8] / vtt[9] / vtt[10] / vtt[11] / vtt[12] / vtt[13] / vtt[14] / vtt[15] / vtt[16] / vtt[17] / vtt[18] / vtt[19] / vtt[20] / vtt[21] / vtt[22] / vtt[23] / vtt[24] / vtt[25] / vtt[26] / vtt[27] / vtt[28] / vtt[29] / vtt[30] / vtt[31] / vtt[32] / vtt[33] / vtt[34] / vtt[35] / vtt[36] / vtt[37] / vtt[38] / vtt[39] / vtt[40] / vtt[41] / vtt[42] / vtt[43] / vtt[44] / vtt[45] / vtt[46] / vtt[47] / vtt[48] / vtt[49] / vtt[50];
 
                 TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
                 historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vtt[i] = 1f;
+                }
+                vt[0] = armazena;
+            }
+        }
+        //Fim subtração com divisão.________________________________________________________________
+
+        //Subtração com multiplicação.______________________________________________________________
+        if (tamanho > 0) {
+            if (sinal.equals("X")) {
+
+                if (tamanho < vtt.length) {
+                    vtt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                    historico.setPriNum(TxtResultado.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+                }
+                calculo = vtt[0] * vtt[1] * vtt[2] * vtt[3] * vtt[4] * vtt[5] * vtt[6] * vtt[7] * vtt[8] * vtt[9] * vtt[10] * vtt[11] * vtt[12] * vtt[13] * vtt[14] * vtt[15] * vtt[16] * vtt[17] * vtt[18] * vtt[19] * vtt[20] * vtt[21] * vtt[22] * vtt[23] * vtt[24] * vtt[25] * vtt[26] * vtt[27] * vtt[28] * vtt[29] * vtt[30] * vtt[31] * vtt[32] * vtt[33] * vtt[34] * vtt[35] * vtt[36] * vtt[37] * vtt[38] * vtt[39] * vtt[40] * vtt[41] * vtt[42] * vtt[43] * vtt[44] * vtt[45] * vtt[46] * vtt[47] * vtt[48] * vtt[49] * vtt[50];
+
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vtt[i] = 1f;
+                }
+                vt[0] = armazena;
+            }
+        }
+        //Fim subtração com multiplicação.__________________________________________________________
+
+        //Subtração com adição._____________________________________________________________________
+        if (tamanho > 0) {
+            if (sinal.equals("+")) {
+
+                calculo = vt[0] + vt[1] + vt[2] + vt[3] + vt[4] + vt[5] + vt[6] + vt[7] + vt[8] + vt[9] + vt[10] + vt[11] + vt[12] + vt[13] + vt[14] + vt[15] + vt[16] + vt[17] + vt[18] + vt[19] + vt[20] + vt[21] + vt[22] + vt[23] + vt[24] + vt[25] + vt[26] + vt[27] + vt[28] + vt[29] + vt[30] + vt[31] + vt[32] + vt[33] + vt[34] + vt[35] + vt[36] + vt[37] + vt[38] + vt[39] + vt[40] + vt[41] + vt[42] + vt[43] + vt[44] + vt[45] + vt[46] + vt[47] + vt[48] + vt[49] + vt[50];
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vt[i] = 0f;
+                }
+                vt[0] = armazena;
+
+            }
+        }
+        //Subtração com adição._____________________________________________________________________
+
+        if (tamanho > 0) {
+            if (apaga != 0) {
+                if (sinal.equals("-")) {
+                    calculo = vt[0] - vt[1] - vt[2] - vt[3] - vt[4] - vt[5] - vt[6] - vt[7] - vt[8] - vt[9] - vt[10] - vt[11] - vt[12] - vt[13] - vt[14] - vt[15] - vt[16] - vt[17] - vt[18] - vt[19] - vt[20] - vt[21] - vt[22] - vt[23] - vt[24] - vt[25] - vt[26] - vt[27] - vt[28] - vt[29] - vt[30] - vt[31] - vt[32] - vt[33] - vt[34] - vt[35] - vt[36] - vt[37] - vt[38] - vt[39] - vt[40] - vt[41] - vt[42] - vt[43] - vt[44] - vt[45] - vt[46] - vt[47] - vt[48] - vt[49] - vt[50];
+
+                    TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                    historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+                }
             }
         }
 
@@ -693,18 +844,91 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSubtracaoActionPerformed
 
     private void btnDivisaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivisaoActionPerformed
-        if (tamanho < vtt.length) {
-            vtt[tamanho] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
-            historico.setPriNum(TxtResultado.getText());
-        } else {
-            JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+        if (sinal.equals("X") || sinal.equals("/") || sinal.equals("null")) {
+            if (tamanho < vtt.length) {
+                vtt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                historico.setPriNum(TxtResultado.getText());
+            } else {
+                JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+            }
         }
+
+        //Divisão com adição._______________________________________________________________________
         if (tamanho > 0) {
-            if (apaga != 0) {
-                calculo = vtt[0] / vtt[1] / vtt[2] / vtt[3] / vtt[4] / vtt[5] / vtt[6] / vtt[7] / vtt[8] / vtt[9] / vtt[10] / vtt[11] / vtt[12] / vtt[13] / vtt[14] / vtt[15] / vtt[16] / vtt[17] / vtt[18] / vtt[19] / vtt[20] / vtt[21] / vtt[22] / vtt[23] / vtt[24] / vtt[25] / vtt[26] / vtt[27] / vtt[28] / vtt[29] / vtt[30] / vtt[31] / vtt[32] / vtt[33] / vtt[34] / vtt[35] / vtt[36] / vtt[37] / vtt[38] / vtt[39] / vtt[40] / vtt[41] / vtt[42] / vtt[43] / vtt[44] / vtt[45] / vtt[46] / vtt[47] / vtt[48] / vtt[49] / vtt[50];
+            if (sinal.equals("+")) {
+
+                if (tamanho < vt.length) {
+                    vt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                    historico.setPriNum(TxtResultado.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+                }
+                calculo = vt[0] + vt[1] + vt[2] + vt[3] + vt[4] + vt[5] + vt[6] + vt[7] + vt[8] + vt[9] + vt[10] + vt[11] + vt[12] + vt[13] + vt[14] + vt[15] + vt[16] + vt[17] + vt[18] + vt[19] + vt[20] + vt[21] + vt[22] + vt[23] + vt[24] + vt[25] + vt[26] + vt[27] + vt[28] + vt[29] + vt[30] + vt[31] + vt[32] + vt[33] + vt[34] + vt[35] + vt[36] + vt[37] + vt[38] + vt[39] + vt[40] + vt[41] + vt[42] + vt[43] + vt[44] + vt[45] + vt[46] + vt[47] + vt[48] + vt[49] + vt[50];
 
                 TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
                 historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vt[i] = 1f;
+                }
+                vtt[0] = armazena;
+            }
+        }
+        //Fim divisão com adição.___________________________________________________________________
+
+        //Divisão com subtração.____________________________________________________________________
+        if (tamanho > 0) {
+            if (sinal.equals("-")) {
+
+                if (tamanho < vt.length) {
+                    vt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                    historico.setPriNum(TxtResultado.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+                }
+                calculo = vt[0] - vt[1] - vt[2] - vt[3] - vt[4] - vt[5] - vt[6] - vt[7] - vt[8] - vt[9] - vt[10] - vt[11] - vt[12] - vt[13] - vt[14] - vt[15] - vt[16] - vt[17] - vt[18] - vt[19] - vt[20] - vt[21] - vt[22] - vt[23] - vt[24] - vt[25] - vt[26] - vt[27] - vt[28] - vt[29] - vt[30] - vt[31] - vt[32] - vt[33] - vt[34] - vt[35] - vt[36] - vt[37] - vt[38] - vt[39] - vt[40] - vt[41] - vt[42] - vt[43] - vt[44] - vt[45] - vt[46] - vt[47] - vt[48] - vt[49] - vt[50];
+
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vt[i] = 1f;
+                }
+                vtt[0] = armazena;
+            }
+        }
+        //Fim divisão com subtração.________________________________________________________________
+
+        //Divisão com multiplicação.________________________________________________________________
+        if (tamanho > 0) {
+            if (sinal.equals("X")) {
+                calculo = vtt[0] * vtt[1] * vtt[2] * vtt[3] * vtt[4] * vtt[5] * vtt[6] * vtt[7] * vtt[8] * vtt[9] * vtt[10] * vtt[11] * vtt[12] * vtt[13] * vtt[14] * vtt[15] * vtt[16] * vtt[17] * vtt[18] * vtt[19] * vtt[20] * vtt[21] * vtt[22] * vtt[23] * vtt[24] * vtt[25] * vtt[26] * vtt[27] * vtt[28] * vtt[29] * vtt[30] * vtt[31] * vtt[32] * vtt[33] * vtt[34] * vtt[35] * vtt[36] * vtt[37] * vtt[38] * vtt[39] * vtt[40] * vtt[41] * vtt[42] * vtt[43] * vtt[44] * vtt[45] * vtt[46] * vtt[47] * vtt[48] * vtt[49] * vtt[50];
+
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vtt[i] = 1f;
+                }
+                vtt[0] = armazena;
+            }
+        }
+        //Fim divisão com multiplicação.____________________________________________________________
+
+        if (tamanho > 0) {
+            if (apaga != 0) {
+                if (sinal.equals("/")) {
+                    calculo = vtt[0] / vtt[1] / vtt[2] / vtt[3] / vtt[4] / vtt[5] / vtt[6] / vtt[7] / vtt[8] / vtt[9] / vtt[10] / vtt[11] / vtt[12] / vtt[13] / vtt[14] / vtt[15] / vtt[16] / vtt[17] / vtt[18] / vtt[19] / vtt[20] / vtt[21] / vtt[22] / vtt[23] / vtt[24] / vtt[25] / vtt[26] / vtt[27] / vtt[28] / vtt[29] / vtt[30] / vtt[31] / vtt[32] / vtt[33] / vtt[34] / vtt[35] / vtt[36] / vtt[37] / vtt[38] / vtt[39] / vtt[40] / vtt[41] / vtt[42] / vtt[43] / vtt[44] / vtt[45] / vtt[46] / vtt[47] / vtt[48] / vtt[49] / vtt[50];
+
+                    TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                    historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+                }
             }
         }
 
@@ -718,22 +942,94 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDivisaoActionPerformed
 
     private void btnMultiplicacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultiplicacaoActionPerformed
-        if (tamanho < vtt.length) {
-            vtt[tamanho] = Float.valueOf(TxtResultado.getText().replaceAll(",", "."));
-            historico.setPriNum(TxtResultado.getText());
-        } else {
-            JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+        if (sinal.equals("X") || sinal.equals("/") || sinal.equals("null")) {
+            if (tamanho < vtt.length) {
+                vtt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                historico.setPriNum(TxtResultado.getText());
+            } else {
+                JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+            }
         }
+        //Multiplicação com subtração.______________________________________________________________
         if (tamanho > 0) {
-            if (apaga != 0) {
-                calculo = vtt[0] * vtt[1] * vtt[2] * vtt[3] * vtt[4] * vtt[5] * vtt[6] * vtt[7] * vtt[8] * vtt[9] * vtt[10] * vtt[11] * vtt[12] * vtt[13] * vtt[14] * vtt[15] * vtt[16] * vtt[17] * vtt[18] * vtt[19] * vtt[20] * vtt[21] * vtt[22] * vtt[23] * vtt[24] * vtt[25] * vtt[26] * vtt[27] * vtt[28] * vtt[29] * vtt[30] * vtt[31] * vtt[32] * vtt[33] * vtt[34] * vtt[35] * vtt[36] * vtt[37] * vtt[38] * vtt[39] * vtt[40] * vtt[41] * vtt[42] * vtt[43] * vtt[44] * vtt[45] * vtt[46] * vtt[47] * vtt[48] * vtt[49] * vtt[50];
+            if (sinal.equals("-")) {
+
+                if (tamanho < vt.length) {
+                    vt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                    historico.setPriNum(TxtResultado.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+                }
+                calculo = vt[0] - vt[1] - vt[2] - vt[3] - vt[4] - vt[5] - vt[6] - vt[7] - vt[8] - vt[9] - vt[10] - vt[11] - vt[12] - vt[13] - vt[14] - vt[15] - vt[16] - vt[17] - vt[18] - vt[19] - vt[20] - vt[21] - vt[22] - vt[23] - vt[24] - vt[25] - vt[26] - vt[27] - vt[28] - vt[29] - vt[30] - vt[31] - vt[32] - vt[33] - vt[34] - vt[35] - vt[36] - vt[37] - vt[38] - vt[39] - vt[40] - vt[41] - vt[42] - vt[43] - vt[44] - vt[45] - vt[46] - vt[47] - vt[48] - vt[49] - vt[50];
 
                 TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
                 historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vt[i] = 1f;
+                }
+                vtt[0] = armazena;
+            }
+        }
+        //Fim multiplicação com subtração.__________________________________________________________
+
+        //Multiplicação com adição._________________________________________________________________
+        if (tamanho > 0) {
+            if (sinal.equals("+")) {
+
+                if (tamanho < vt.length) {
+                    vt[tamanho] = Float.valueOf(TxtResultado.getText().replace(".","").replace(",","."));
+                    historico.setPriNum(TxtResultado.getText());
+                } else {
+                    JOptionPane.showMessageDialog(this, "O vetor já está cheio, não é possível adicionar mais elementos");
+                }
+                calculo = vt[0] + vt[1] + vt[2] + vt[3] + vt[4] + vt[5] + vt[6] + vt[7] + vt[8] + vt[9] + vt[10] + vt[11] + vt[12] + vt[13] + vt[14] + vt[15] + vt[16] + vt[17] + vt[18] + vt[19] + vt[20] + vt[21] + vt[22] + vt[23] + vt[24] + vt[25] + vt[26] + vt[27] + vt[28] + vt[29] + vt[30] + vt[31] + vt[32] + vt[33] + vt[34] + vt[35] + vt[36] + vt[37] + vt[38] + vt[39] + vt[40] + vt[41] + vt[42] + vt[43] + vt[44] + vt[45] + vt[46] + vt[47] + vt[48] + vt[49] + vt[50];
+
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < vt.length; i++) {
+                    vt[i] = 1f;
+                }
+                vtt[0] = armazena;
+            }
+        }
+        //Fim multiplicação com adição._____________________________________________________________
+
+        //Multiplicação com divisão.________________________________________________________________
+        if (tamanho > 0) {
+            if (sinal.equals("/")) {
+                calculo = vtt[0] / vtt[1] / vtt[2] / vtt[3] / vtt[4] / vtt[5] / vtt[6] / vtt[7] / vtt[8] / vtt[9] / vtt[10] / vtt[11] / vtt[12] / vtt[13] / vtt[14] / vtt[15] / vtt[16] / vtt[17] / vtt[18] / vtt[19] / vtt[20] / vtt[21] / vtt[22] / vtt[23] / vtt[24] / vtt[25] / vtt[26] / vtt[27] / vtt[28] / vtt[29] / vtt[30] / vtt[31] / vtt[32] / vtt[33] / vtt[34] / vtt[35] / vtt[36] / vtt[37] / vtt[38] / vtt[39] / vtt[40] / vtt[41] / vtt[42] / vtt[43] / vtt[44] / vtt[45] / vtt[46] / vtt[47] / vtt[48] / vtt[49] / vtt[50];
+
+                TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+
+                armazena = calculo;
+
+                for (int i = 0; i < 51; i++) {
+                    vtt[i] = 1f;
+                }
+                vtt[0] = armazena;
+            }
+        }
+        //Fim multiplicação com divisão.____________________________________________________________
+
+        if (tamanho > 0) {
+            if (apaga != 0) {
+                if (sinal.equals("X")) {
+                    calculo = vtt[0] * vtt[1] * vtt[2] * vtt[3] * vtt[4] * vtt[5] * vtt[6] * vtt[7] * vtt[8] * vtt[9] * vtt[10] * vtt[11] * vtt[12] * vtt[13] * vtt[14] * vtt[15] * vtt[16] * vtt[17] * vtt[18] * vtt[19] * vtt[20] * vtt[21] * vtt[22] * vtt[23] * vtt[24] * vtt[25] * vtt[26] * vtt[27] * vtt[28] * vtt[29] * vtt[30] * vtt[31] * vtt[32] * vtt[33] * vtt[34] * vtt[35] * vtt[36] * vtt[37] * vtt[38] * vtt[39] * vtt[40] * vtt[41] * vtt[42] * vtt[43] * vtt[44] * vtt[45] * vtt[46] * vtt[47] * vtt[48] * vtt[49] * vtt[50];
+
+                    TxtResultado.setText(String.valueOf(calculo).replaceAll(",", "."));
+                    historico.setPriNum(String.valueOf(calculo).replaceAll(",", "."));
+                }
             }
         }
 
-        txtre.setText(historico.getPriNum() + " X ");
+        txtre.setText(historico.getPriNum() + " × ");
 
         s = txtre.getText();
 
@@ -742,14 +1038,14 @@ public class Calculadora extends javax.swing.JFrame {
         sinal = "X";
     }//GEN-LAST:event_btnMultiplicacaoActionPerformed
 
-    private void TxtResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtResultadoActionPerformed
-
-    }//GEN-LAST:event_TxtResultadoActionPerformed
-
     private void btnHistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistActionPerformed
         Resultado resultado = new Resultado(new javax.swing.JFrame(), true);
         resultado.setVisible(true);
     }//GEN-LAST:event_btnHistActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        TxtResultado.setText(TxtResultado.getText()+".");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
 
@@ -778,7 +1074,7 @@ public class Calculadora extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField TxtResultado;
+    private javax.swing.JFormattedTextField TxtResultado;
     private javax.swing.JButton btn0;
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn2;
@@ -798,6 +1094,7 @@ public class Calculadora extends javax.swing.JFrame {
     private javax.swing.JButton btnMultiplicacao;
     private javax.swing.JButton btnSubtracao;
     private javax.swing.JButton btnVirgula;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel9;
