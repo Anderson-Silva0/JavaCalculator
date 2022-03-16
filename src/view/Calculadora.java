@@ -718,9 +718,12 @@ public class Calculadora extends javax.swing.JFrame {
         try {
             Historico historico = new Historico();
             Conexao con = new Conexao();
+            con.conectar();
+            
             historico.setExpressao(txtre.getText());
             con.inserir(historico);
 
+            con.desconectar();
         } catch (Exception e) {
             e.printStackTrace();
         }

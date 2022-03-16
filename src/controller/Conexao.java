@@ -39,7 +39,7 @@ public class Conexao {
 
     public void inserir(Historico historico) throws SQLException {
         String SQL = "INSERT INTO historico (resultado) VALUES (?)";
-        conectar();
+        
         try {
             stmt = con.prepareStatement(SQL);
             stmt.setString(1, historico.getExpressao());
@@ -49,7 +49,18 @@ public class Conexao {
             e.printStackTrace();
             JOptionPane.showMessageDialog(calc, "Erro ao salvar resultado no banco de dados!");
         }
-        desconectar();
+    }
+    
+    public void deletar(){
+        String SQL = "DELETE FROM historico";
+       
+        try{
+            stmt = con.prepareStatement(SQL);
+            stmt.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(calc, "Erro ao deletar histórico!");
+        }
     }
 
     public List<Historico> read() {
